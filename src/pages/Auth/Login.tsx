@@ -1,6 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { PrivateVariables } from "../../config/PrivateVariable";
+import { setToken } from "../../utils/helpers";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../utils/constant";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +12,7 @@ const Login = () => {
   });
   const [loading, setLoading] = useState(false);
   const [hidePassword, setHidePassword] = useState(true);
+  const navigate = useNavigate();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e?.target;
     setFormData((prev) => ({
@@ -17,12 +21,19 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = axios.post(`${PrivateVariables.Api_Url}api/login`, formData);
-    //   Cookies.set("token", token, { expires: 1 })
+      const res = await axios.post(
+        `${PrivateVariables.Api_Url}api/login`,
+        formData,
+      );
+      // Cookies.set("token", token, { expires: 1 })
+      navigate(ROUTES.HOME)
+      setToken(res?.data?.token);
+      // console.log("res", res?.data?.token);
+
       setFormData({
         email: "",
         password: "",

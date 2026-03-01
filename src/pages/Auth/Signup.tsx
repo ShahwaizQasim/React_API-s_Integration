@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { PrivateVariables } from "../../config/PrivateVariable";
 import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../utils/constant";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ const Signup = () => {
         `${PrivateVariables.Api_Url}api/register`,
         formData,
       );
-      navigate('/login')
+      navigate(ROUTES.LOGIN)
       setFormData({
         userName: "",
         email: "",
