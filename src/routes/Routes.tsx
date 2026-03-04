@@ -8,7 +8,7 @@ export const routes = [
   {
     path: ROUTES.HOME,
     element: <Home />,
-    protected: false,
+    protected: true,
   },
   {
     path: ROUTES.SIGNUP,

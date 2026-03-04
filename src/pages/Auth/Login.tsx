@@ -4,6 +4,8 @@ import { PrivateVariables } from "../../config/PrivateVariable";
 import { setToken } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utils/constant";
+import { useDispatch } from "react-redux";
+import { setLoginData, setUser } from "../../redux/appReducer";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +15,8 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [hidePassword, setHidePassword] = useState(true);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e?.target;
     setFormData((prev) => ({
@@ -30,9 +34,11 @@ const Login = () => {
         formData,
       );
       // Cookies.set("token", token, { expires: 1 })
-      navigate(ROUTES.HOME)
+      dispatch(setLoginData(res?.data?.data))
+      dispatch(setUser(res?.data?.data))
+      navigate(ROUTES.HOME);
       setToken(res?.data?.token);
-      // console.log("res", res?.data?.token);
+      console.log("res", res?.data.data);
 
       setFormData({
         email: "",

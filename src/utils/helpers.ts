@@ -2,8 +2,11 @@ import { STORAGE_KEYS } from "./constant"
 import Cookies from "js-cookie"
 
 export const setToken = (token: string) => {
-    Cookies.set(STORAGE_KEYS.TOKEN, token)
+    return Cookies.set(STORAGE_KEYS.TOKEN, token)
 }
 export const removeToken = () => {
-  Cookies.remove(STORAGE_KEYS.TOKEN)
+  return Cookies.remove(STORAGE_KEYS.TOKEN)
+}
+export const getToken = () => {
+  return Cookies.get(STORAGE_KEYS.TOKEN)
 }
