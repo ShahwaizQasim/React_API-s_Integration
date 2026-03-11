@@ -2,6 +2,8 @@ import Login from "../pages/Auth/Login";
 import Signup from "../pages/Auth/Signup";
 import About from "../pages/UserPages/About";
 import Home from "../pages/UserPages/Home";
+import ProductsPage from "../pages/UserPages/Products";
+import AddProducts from "../pages/UserPages/AddProducts";
 import { ROUTES } from "../utils/constant";
 
 export const routes = [
@@ -29,6 +31,16 @@ export const routes = [
   {
     path: ROUTES.ABOUT,
     element: <About />,
-    protected: false,
+    protected: true,
+  },
+  {
+    path: ROUTES.PRODUCTS,
+    element: <ProductsPage />,
+    protected: true,
+  },
+  {
+    path: ROUTES.ADDPRODUCTS,
+    element: <AddProducts/>,
+    protected: true,
   },
 ];

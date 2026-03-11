@@ -3,7 +3,8 @@ export const ROUTES = {
   LOGIN: "/login",
   SIGNUP: "/register",
   PRODUCTS: "/products",
-  ABOUT:'/about'
+  ADDPRODUCTS: "/add-products",
+  ABOUT:'/about',
 };
 
 export const STORAGE_KEYS = {
