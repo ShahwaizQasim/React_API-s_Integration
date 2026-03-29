@@ -21,7 +21,7 @@ const AddProducts = () => {
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const token = getToken();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleInputChange = (e: any) => {
     const { name, value } = e?.target;
@@ -63,14 +63,14 @@ const AddProducts = () => {
           },
         },
       );
-      navigate(ROUTES.PRODUCTS)
+      navigate(ROUTES.PRODUCTS);
       setFormData({
         ProductName: "",
         ProductPrice: "",
         ProductDescription: "",
       });
       setImage(null);
-      setPreview(null)
+      setPreview(null);
       console.log("api response+++++++++", res);
     } catch (error) {
       console.log(error);
