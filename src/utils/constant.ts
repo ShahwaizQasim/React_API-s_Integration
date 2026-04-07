@@ -4,6 +4,7 @@ export const ROUTES = {
   SIGNUP: "/register",
   PRODUCTS: "/products",
   ADDPRODUCTS: "/add-products",
+  PRODUCT_DETAIL: "/products/:id",
   ABOUT:'/about',
 };
 

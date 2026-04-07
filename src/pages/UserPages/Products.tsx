@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { PrivateVariables } from "../../config/PrivateVariable";
 import { getToken } from "../../utils/helpers";
 import { Link } from "react-router-dom";
-import { ROUTES } from "../../utils/constant";
-import qs from "qs";
+import { CircularProgress, Pagination } from "@mui/material";
 
 interface ProductsData {
+  _id: string;
   ProductName: string;
   ProductPicture: string;
   ProductPrice: string;
@@ -15,20 +15,25 @@ interface ProductsData {
 
 type ParamsType = {
   ProductName?: string;
+  page?: number;
+  limit?: number;
 };
 
 const ProductsPage = () => {
   const [data, setData] = useState<ProductsData[]>([]);
   const [loading, setLoading] = useState(false);
   const [ProductsName, setProductsName] = useState("");
+  const [totalPages, setTotalPages] = useState(3);
+  const [page, setPage] = useState(1);
   const token = getToken();
-
-  console.log("+++++", ProductsName);
 
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      let params: ParamsType = {};
+      let params: ParamsType = {
+        page: page,
+        limit: 3,
+      };
       console.log("params", params);
 
       if (ProductsName.trim()) params.ProductName = ProductsName.trim();
@@ -42,8 +47,9 @@ const ProductsPage = () => {
           },
         },
       );
-      console.log("products+++++", res.data.products);
       setData(res.data.products || []);
+      setPage(res.data.currentPage || 1);
+      setTotalPages(res.data.totalPages || 1);
     } catch (error) {
       console.log(error);
     } finally {
@@ -53,7 +59,8 @@ const ProductsPage = () => {
   useEffect(() => {
     const t = setTimeout(() => fetchProducts(), 400);
     return () => clearTimeout(t);
-  }, [ProductsName]);
+  }, [ProductsName, page]);
+
   return (
     <div className="min-h-screen container mx-auto">
       <h1 className="text-center mt-10 text-3xl font-semibold">
@@ -65,16 +72,16 @@ const ProductsPage = () => {
           placeholder="Search products..."
           className="border border-gray-400 p-2 py-3 rounded-sm"
           value={ProductsName}
-          onChange={(e) => setProductsName(e.target.value)}
+          onChange={(e) => {
+            setProductsName(e.target.value);
+            setPage(1);
+          }}
         />
       </div>
       <div className=" flex justify-center items-center gap-4 flex-col mt-8">
         {loading ? (
-          <h1>loading....</h1>
-        ) : // <div className="flex items-center justify-center h-screen bg-black">
-        //   <span className="loader"></span>
-        // </div>
-        data.length > 0 ? (
+          <CircularProgress />
+        ) : data.length > 0 ? (
           <>
             <div className=" grid grid-cols-3 gap-10 mt-4">
               {data.map((item, ind) => (
@@ -89,15 +96,29 @@ const ProductsPage = () => {
 
                   <h1 className="mt-2">{item.ProductName}</h1>
                   <p>{item.description}</p>
-                  <p>{item.ProductPrice}</p>
+                  <div className="flex justify-between">
+                    <p>{item.ProductPrice}</p>
+                    <Link
+                      to={`/products/${item?._id}`}
+                      className="hover:text-blue-500"
+                    >
+                      View Details
+                    </Link>
+                  </div>
                 </div>
               ))}
             </div>
+            <Pagination
+              count={totalPages}
+              page={page}
+              onChange={(e, value) => setPage(value)}
+              variant="outlined"
+              shape="rounded"
+            />
           </>
         ) : (
           <p>No data found</p>
         )}
-        <Link to={ROUTES.HOME}>Go to Home Page</Link>
       </div>
     </div>
   );

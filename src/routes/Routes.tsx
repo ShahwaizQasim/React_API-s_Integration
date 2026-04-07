@@ -5,6 +5,7 @@ import Home from "../pages/UserPages/Home";
 import ProductsPage from "../pages/UserPages/Products";
 import AddProducts from "../pages/UserPages/AddProducts";
 import { ROUTES } from "../utils/constant";
+import ProductDetail from "../pages/UserPages/ProductDetail";
 
 export const routes = [
   {
@@ -22,12 +23,7 @@ export const routes = [
     element: <Login />,
     protected: false,
   },
-  //     {
-  //     path: '/dashboard',
-  //     element: <Dashboard />,
-  //     protected: true,
-  //     redirectTo: ROUTES.LOGIN,
-  //   },
+  
   {
     path: ROUTES.ABOUT,
     element: <About />,
@@ -40,7 +36,12 @@ export const routes = [
   },
   {
     path: ROUTES.ADDPRODUCTS,
-    element: <AddProducts/>,
+    element: <AddProducts />,
+    protected: true,
+  },
+  {
+    path: ROUTES.PRODUCT_DETAIL,
+    element: <ProductDetail />,
     protected: true,
   },
 ];

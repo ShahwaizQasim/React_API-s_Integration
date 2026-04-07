@@ -1,25 +1,21 @@
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { logout } from "../../redux/appReducer";
-import { ROUTES } from "../../utils/constant";
-
 const Home = () => {
-  const dispatch = useDispatch();
-  const handleLogout = () => {
-    dispatch(logout());
-  };
   return (
-    <div className="min-h-screen flex justify-center items-center flex-col gap-6">
-      Home Page
-      <Link to={ROUTES.ABOUT}>Go To About Page</Link>
-      <Link to={ROUTES.ADDPRODUCTS}>Go To Add Products</Link>
-      <Link to={ROUTES.PRODUCTS}>Go To Products Page</Link>
-      <button
-        onClick={handleLogout}
-        className="border border-gray-400 p-3 transform hover:scale-95 transition active:scale-95"
-      >
-        Logout
-      </button>
+    <div className="h-full w-full bg-gray-100 py-24">
+      <h1 className="text-3xl font-bold text-center">
+        Welcome to the Home Page
+      </h1>
+
+      <div className="flex justify-center items-center flex-col mx-auto  sm:flex-row gap-6 mt-8">
+        <div className="border border-red-500 w-56 py-10 flex justify-center items-center">
+          <h1>Left Side</h1>
+        </div>
+        <div className="border border-red-500 w-56 py-10 flex justify-center items-center ">
+          <h1>middle</h1>
+        </div>
+        <div className="border border-red-500 w-56 py-10 flex justify-center items-center ">
+          <h1>Right Side</h1>
+        </div>
+      </div>
     </div>
   );
 };

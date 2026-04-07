@@ -1,11 +1,16 @@
-import { AllRoutes } from "./routes/AllRoutes"
+import { useLocation } from "react-router-dom";
+import Header from "./components/Header";
+import { AllRoutes } from "./routes/AllRoutes";
 
 function App() {
+  const location = useLocation();
+  const hideHeader = location.pathname === "/login" || location.pathname === "/register";
   return (
     <>
-  <AllRoutes />
+      {!hideHeader && <Header />}
+      <AllRoutes />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
