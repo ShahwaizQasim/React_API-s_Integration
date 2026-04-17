@@ -6,6 +6,8 @@ export const ROUTES = {
   ADDPRODUCTS: "/add-products",
   PRODUCT_DETAIL: "/products/:id",
   ABOUT:'/about',
+  SUCCESS:'/success',
+  CANCEL:'/cancel',
 };
 
 export const STORAGE_KEYS = {

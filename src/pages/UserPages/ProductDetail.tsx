@@ -9,13 +9,12 @@ interface ProductsData {
   _id: string;
   ProductName: string;
   ProductPicture: string;
-  ProductPrice: string;
+  ProductPrice: number | string;
   description: string;
 }
 
 const ProductDetail = () => {
   const { id } = useParams();
-  console.log(id);
 
   const [data, setData] = useState<ProductsData | null>(null);
   const [loading, setLoading] = useState(false);
@@ -40,6 +39,27 @@ const ProductDetail = () => {
       console.log(error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const PaymentFunction = async () => {
+    try {
+      const res = await axios.post(
+        `${PrivateVariables.Api_Url}create-checkout-session`,
+        {
+          product: {
+            name: data?.ProductName,
+            image: data?.ProductPicture,
+            price: data?.ProductPrice,
+
+          },
+        },
+      );
+      console.log("payment response", res);
+
+      window.location.href = res.data.url;
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -72,6 +92,9 @@ const ProductDetail = () => {
                 <h1 className="mt-2">{data.ProductName}</h1>
                 <p>{data.description}</p>
                 <p>{data.ProductPrice}</p>
+                <button onClick={PaymentFunction} className="w-full bg-blue-500 px-4 py-2 rounded-lg mt-4 text-white font-semibold">
+                  Buy Now
+                </button>
               </div>
             </div>
           </div>

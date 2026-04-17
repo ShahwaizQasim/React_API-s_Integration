@@ -6,6 +6,8 @@ import ProductsPage from "../pages/UserPages/Products";
 import AddProducts from "../pages/UserPages/AddProducts";
 import { ROUTES } from "../utils/constant";
 import ProductDetail from "../pages/UserPages/ProductDetail";
+import { Success } from "../pages/UserPages/Sucess";
+import Cancel from "../pages/UserPages/Cancel";
 
 export const routes = [
   {
@@ -44,4 +46,14 @@ export const routes = [
     element: <ProductDetail />,
     protected: true,
   },
+  {
+    path: ROUTES.SUCCESS,
+    element: <Success />,
+    protected: true,
+  },
+  {
+    path: ROUTES.CANCEL,
+    element: <Cancel />,
+    protected: true,
+  }
 ];

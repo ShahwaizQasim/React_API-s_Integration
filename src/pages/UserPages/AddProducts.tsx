@@ -91,7 +91,7 @@ const AddProducts = () => {
           placeholder="Enter Product Name"
         />
         <input
-          type="text"
+          type="number"
           name="ProductPrice"
           value={formData.ProductPrice}
           onChange={handleInputChange}
