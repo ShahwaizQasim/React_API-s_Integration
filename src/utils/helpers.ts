@@ -10,3 +10,7 @@ export const removeToken = () => {
 export const getToken = () => {
   return Cookies.get(STORAGE_KEYS.TOKEN)
 }
+
+export function clearAuthData(){
+  removeToken();
+}

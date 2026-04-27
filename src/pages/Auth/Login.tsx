@@ -1,11 +1,10 @@
-import axios from "axios";
 import React, { useState } from "react";
-import { PrivateVariables } from "../../config/PrivateVariable";
 import { setToken } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utils/constant";
 import { useDispatch } from "react-redux";
 import { setLoginData, setUser } from "../../redux/appReducer";
+import axiosInstance from "../../config/api";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -29,13 +28,10 @@ const Login = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post(
-        `${PrivateVariables.Api_Url}api/login`,
-        formData,
-      );
+      const res = await axiosInstance.post('api/login', formData)
       // Cookies.set("token", token, { expires: 1 })
-      dispatch(setLoginData(res?.data?.data))
-      dispatch(setUser(res?.data?.data))
+      dispatch(setLoginData(res?.data?.data));
+      dispatch(setUser(res?.data?.data));
       navigate(ROUTES.HOME);
       setToken(res?.data?.token);
       console.log("res", res?.data.data);

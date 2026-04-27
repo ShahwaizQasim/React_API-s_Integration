@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getToken } from "../utils/helpers";
 import { ROUTES } from "../utils/constant";
-import axios from "axios";
-import { PrivateVariables } from "../config/PrivateVariable";
 import { setUser } from "../redux/appReducer";
+import axiosInstance from "../config/api";
 
 const ProtectedRoutes = ({ routeConfig }: any) => {
   const { protected: isProtected, element } = routeConfig;
@@ -21,11 +20,12 @@ const ProtectedRoutes = ({ routeConfig }: any) => {
   const fetchUser = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`${PrivateVariables.Api_Url}api/UserInfo`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      // const res = await axios.get(`${PrivateVariables.Api_Url}api/UserInfo`, {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // });
+      const res = await axiosInstance.get('api/UserInfo')
       dispatch(setUser(res?.data?.user));
       console.log("res", res.data.user);
         await delay(1000);

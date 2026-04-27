@@ -25,7 +25,7 @@ export const routes = [
     element: <Login />,
     protected: false,
   },
-  
+
   {
     path: ROUTES.ABOUT,
     element: <About />,
@@ -55,5 +55,5 @@ export const routes = [
     path: ROUTES.CANCEL,
     element: <Cancel />,
     protected: true,
-  }
+  },
 ];

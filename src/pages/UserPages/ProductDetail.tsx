@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { PrivateVariables } from "../../config/PrivateVariable";
-import { getToken } from "../../utils/helpers";
 import { useParams } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
+import axiosInstance from "../../config/api";
 
 interface ProductsData {
   _id: string;
@@ -18,21 +18,11 @@ const ProductDetail = () => {
 
   const [data, setData] = useState<ProductsData | null>(null);
   const [loading, setLoading] = useState(false);
-  const token = getToken();
 
   const fetchProducts = async () => {
     try {
       setLoading(true);
-
-      const res = await axios.get(
-        `${PrivateVariables.Api_Url}api/get/products/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-
+      const res = await axiosInstance.get(`api/get/products/${id}`);
       const product = res.data.product || res.data.products || res.data;
       setData(Array.isArray(product) ? product[0] || null : product || null);
     } catch (error) {

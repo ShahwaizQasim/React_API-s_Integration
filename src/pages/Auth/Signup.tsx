@@ -1,8 +1,7 @@
-import axios from "axios";
 import React, { useState } from "react";
-import { PrivateVariables } from "../../config/PrivateVariable";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utils/constant";
+import axiosInstance from "../../config/api";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -20,15 +19,12 @@ const Signup = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = axios.post(
-        `${PrivateVariables.Api_Url}api/register`,
-        formData,
-      );
-      navigate(ROUTES.LOGIN)
+      const res = await axiosInstance.post("api/register", formData);
+      navigate(ROUTES.LOGIN);
       setFormData({
         userName: "",
         email: "",
