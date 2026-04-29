@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { setToken } from "../../utils/helpers";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utils/constant";
 import { useDispatch } from "react-redux";
 import { setLoginData, setUser } from "../../redux/appReducer";
@@ -82,13 +82,14 @@ const Login = () => {
             {hidePassword ? "Hide" : "Show"}
           </p>
         </div>
-
         <button
           type="submit"
           className="border border-gray-400 p-2 transform hover:scale-95 transition"
         >
           {loading ? "loading...." : "Login"}
         </button>
+        <p className="text-sm">Don't have account? <Link to="/register" className="text-blue-500">Register</Link></p>
+
       </form>
     </div>
   );

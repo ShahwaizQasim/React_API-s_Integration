@@ -1,17 +1,18 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utils/constant";
 import axiosInstance from "../../config/api";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
     userName: "",
+    role: "",
     email: "",
     password: "",
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e?.target;
     setFormData((prev) => ({
       ...prev,
@@ -27,6 +28,7 @@ const Signup = () => {
       navigate(ROUTES.LOGIN);
       setFormData({
         userName: "",
+        role: "",
         email: "",
         password: "",
       });
@@ -54,6 +56,16 @@ const Signup = () => {
           value={formData.userName}
           onChange={handleChange}
         />
+        <select
+          name="role"
+          className="border border-gray-300 p-2 outline-none"
+          value={formData.role}
+          onChange={handleChange}
+        >
+          <option value="" disabled>Select User Type</option>
+          <option value="customer">Customer</option>
+          <option value="seller">Seller</option>
+        </select>
         <input
           type="email"
           name="email"
@@ -76,6 +88,7 @@ const Signup = () => {
         >
           {loading ? "loading...." : "SignUp"}
         </button>
+        <p className="text-sm">Already have a account? <Link to="/login" className="text-blue-500">Login</Link></p>
       </form>
     </div>
   );

@@ -51,7 +51,7 @@ const ProtectedRoutes = ({ routeConfig }: any) => {
     if (loading) return;
     // 1️⃣ User trying to access private route without token → redirect to login
     if (isProtected && (!token || !user)) {
-      navigate(ROUTES.LOGIN, { replace: true });
+      navigate(ROUTES.HOME, { replace: true });
     }
 
     // 2️⃣ User trying to access login/register page while logged in → redirect to home

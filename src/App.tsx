@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import Header from "./components/Header";
+import Header from "./components/LandingPage/Header";
 import { AllRoutes } from "./routes/AllRoutes";
 
 function App() {
