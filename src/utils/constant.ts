@@ -8,7 +8,10 @@ export const ROUTES = {
   ABOUT:'/about',
   SUCCESS:'/success',
   CANCEL:'/cancel',
-  SELLER_DASHBOARD: "/seller-dashboard",
+  SELLER_DASHBOARD: "/seller",
+  ADMIN_DASHBOARD: "/admin/dashboard",
+  ADMIN_LOGIN: "/admin/login",
+  PENDING_APPROVAL: "/pending-approval",
 };
 
 export const STORAGE_KEYS = {

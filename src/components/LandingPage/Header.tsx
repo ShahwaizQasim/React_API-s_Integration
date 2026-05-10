@@ -10,7 +10,6 @@ export default function Navbar() {
   const [searchFocused, setSearchFocused] = useState(false);
   const { user } = useSelector((state: any) => state?.app);
   const dispatch = useDispatch();
-  console.log("user+++", user);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);

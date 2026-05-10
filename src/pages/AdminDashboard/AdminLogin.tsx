@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { setToken } from "../../utils/helpers";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utils/constant";
 import { useDispatch } from "react-redux";
-import { setLoginData, setUser } from "../../redux/appReducer";
+import { setLoginData } from "../../redux/appReducer";
 import axiosInstance from "../../config/api";
-import { toast } from "react-toastify";
 
-const Login = () => {
+const AdminLogin = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -32,7 +31,8 @@ const Login = () => {
       const res = await axiosInstance.post("api/login", formData);
       let user = res?.data?.data;
       let token = res?.data?.token;
-    
+
+      // Cookies.set("token", token, { expires: 1 })
       dispatch(
         setLoginData({
           user,
@@ -40,27 +40,26 @@ const Login = () => {
         }),
       );
       setToken(token);
-      let userRole = user?.role;
-      if (userRole === "seller") {
-        navigate(ROUTES.SELLER_DASHBOARD);
-      } else {
-        navigate(ROUTES.HOME);
-      }
+      navigate(ROUTES.ADMIN_DASHBOARD);
       setFormData({
         email: "",
         password: "",
       });
+      console.log(res);
     } catch (error) {
-      toast.error("Login failed. Please check your credentials and try again.");
       console.log(error);
     } finally {
       setLoading(false);
     }
+
+    console.log(formData);
+    console.log("function run");
   };
+  // console.log("fo  rmData+++",formData);
 
   return (
     <div className="h-screen flex flex-col justify-center items-center">
-      <h1 className="text-3xl">Login</h1>
+      <h1 className="text-3xl">Admin Login</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-4 w-80">
         <input
           type="email"
@@ -94,15 +93,9 @@ const Login = () => {
         >
           {loading ? "loading...." : "Login"}
         </button>
-        <p className="text-sm">
-          Don't have account?{" "}
-          <Link to="/register" className="text-blue-500">
-            Register
-          </Link>
-        </p>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default AdminLogin;

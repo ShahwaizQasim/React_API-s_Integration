@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getToken } from "../utils/helpers";
+import { getRedirectPath, getToken } from "../utils/helpers";
 import { ROUTES } from "../utils/constant";
 import { setUser } from "../redux/appReducer";
 import axiosInstance from "../config/api";
 
 const ProtectedRoutes = ({ routeConfig }: any) => {
-  const { protected: isProtected, element } = routeConfig;
+  const {
+    protected: isProtected,
+    element,
+    roles,
+    sellerApproved,
+  } = routeConfig;
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -15,7 +20,7 @@ const ProtectedRoutes = ({ routeConfig }: any) => {
   const token = getToken();
 
   const delay = (ms: number) =>
-  new Promise(resolve => setTimeout(resolve, ms));
+    new Promise((resolve) => setTimeout(resolve, ms));
 
   const fetchUser = async () => {
     try {
@@ -25,10 +30,9 @@ const ProtectedRoutes = ({ routeConfig }: any) => {
       //     Authorization: `Bearer ${token}`,
       //   },
       // });
-      const res = await axiosInstance.get('api/UserInfo')
+      const res = await axiosInstance.get("api/UserInfo");
       dispatch(setUser(res?.data?.user));
-      console.log("res", res.data.user);
-        await delay(1000);
+      await delay(1000);
     } catch (error) {
       console.log(error);
     } finally {
@@ -49,16 +53,27 @@ const ProtectedRoutes = ({ routeConfig }: any) => {
 
   useEffect(() => {
     if (loading) return;
-    // 1️⃣ User trying to access private route without token → redirect to login
+    // 1️ User trying to access private route without token → redirect to login
     if (isProtected && (!token || !user)) {
       navigate(ROUTES.HOME, { replace: true });
     }
 
-    // 2️⃣ User trying to access login/register page while logged in → redirect to home
+    // 2️ User trying to access login/register page while logged in → redirect to home
     if (!isProtected && token && user) {
-      navigate(ROUTES.HOME, { replace: true });
+      if (!isProtected && token && user) {
+        const redirectPath = getRedirectPath(user);
+        navigate(redirectPath, { replace: true });
+      }
     }
-  }, [token, user, navigate, isProtected, loading]);
+
+    if (roles && roles.length > 0 && !roles.includes(user?.role)) {
+      navigate("/login", { replace: true });
+    }
+
+    if (sellerApproved && user?.role === "seller" && !user?.isSellerApproved) {
+      navigate("/pending-approval");
+    }
+  }, [token, user, navigate, isProtected, loading, roles, sellerApproved]);
 
   if (loading) {
     return (

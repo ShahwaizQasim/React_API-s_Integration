@@ -1,6 +1,10 @@
 // ===== src/components/Navbar.tsx =====
 
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/appReducer";
+import { getLoginRedirectPath } from "../../utils/helpers";
+import { useNavigate } from "react-router-dom";
 
 interface NavbarProps {
   onToggleSidebar: () => void;
@@ -15,7 +19,14 @@ const TopBar: React.FC<NavbarProps> = ({
 }) => {
   const [showProfile, setShowProfile] = useState(false);
   const [search, setSearch] = useState("");
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: any) => state?.app);
+  const handleLogout = () => {
+    const redirectPath = getLoginRedirectPath(user);
+    dispatch(logout());
+    navigate(redirectPath);
+  };
   return (
     <header className="h-[72px] flex-shrink-0 bg-gray-900 dark:bg-gray-950 border-b border-gray-800 flex items-center px-5 gap-4 z-10">
       {/* Toggle */}
@@ -180,7 +191,7 @@ const TopBar: React.FC<NavbarProps> = ({
               ))}
               <div className="border-t border-gray-800 mt-1">
                 <button
-                  onClick={() => setShowProfile(false)}
+                  onClick={handleLogout}
                   className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-400 hover:bg-red-500/10 transition-colors"
                 >
                   <span className="text-base">🚪</span>

@@ -7,7 +7,8 @@ interface SidebarProps {
   collapsed: boolean;
   activeNav: number;
   onNavChange: (index: number) => void;
-  navItems?:any[];
+  navItems?: any[];
+  heading?: string;
 }
 
 interface NavItemProps {
@@ -145,7 +146,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   collapsed,
   activeNav,
   onNavChange,
-  navItems
+  navItems,
+  heading,
 }) => {
   const mainNav = navItems?.slice(0, 5);
   const accountNav = navItems?.slice(5);
@@ -168,7 +170,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             collapsed ? "opacity-0 w-0 overflow-hidden" : "opacity-100"
           }`}
         >
-          Bazzario
+          {heading || "Bazario"}
         </span>
       </div>
 

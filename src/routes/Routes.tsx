@@ -11,6 +11,8 @@ import Cancel from "../pages/UserPages/Cancel";
 import SellerDashboard from "../pages/SellerDashboard/SelllerDashboard";
 import Dashboard from "../pages/SellerDashboard/Dasboard";
 import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
+import AdminLogin from "../pages/AdminDashboard/AdminLogin";
+import PendingApproval from "../pages/SellerDashboard/PendingApproval";
 
 export const routes = [
   {
@@ -60,9 +62,18 @@ export const routes = [
     protected: true,
   },
   {
-    path: "/seller",
+path: ROUTES.PENDING_APPROVAL,
+    element: <PendingApproval />,
+    protected: true,
+    roles: ["seller"],
+    sellerApproved: false,
+  },
+  {
+    path: ROUTES.SELLER_DASHBOARD,
     element: <SellerDashboard />,
     protected: true,
+    roles: ["seller"],
+    sellerApproved: true,
     children: [
       {
         path: "",
@@ -79,9 +90,10 @@ export const routes = [
     ],
   },
   {
-    path: "/admin/dashboard",
+    path: ROUTES.ADMIN_DASHBOARD,
     element: <AdminDashboard />,
     protected: true,
+    roles: ["admin"],
     children: [
       {
         path: "",
@@ -97,7 +109,11 @@ export const routes = [
       },
     ],
   },
-
+  {
+    path: ROUTES.ADMIN_LOGIN,
+    element: <AdminLogin />,
+    protected: false,
+  },
   {
     path: "*",
     element: (

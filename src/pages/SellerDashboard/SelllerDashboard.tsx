@@ -31,6 +31,7 @@ const SellerDashboard: React.FC = () => {
         activeNav={activeNav}
         onNavChange={setActiveNav}
         navItems={navItems}
+        heading="Seller Dashboard"
       />
 
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden">

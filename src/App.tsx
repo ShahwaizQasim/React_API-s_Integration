@@ -8,11 +8,12 @@ function App() {
     location.pathname === "/login" ||
     location.pathname === "/register" ||
     location.pathname === "/seller" ||
-      location.pathname.startsWith("/seller/add-products") ||
-      location.pathname.startsWith("/seller/products") ||
-       location.pathname === "/admin/dashboard" ||
-       location.pathname === "/admin/dashboard/get-products" ||
-       location.pathname === "/admin/dashboard/get-sellers";
+    location.pathname.startsWith("/seller/add-products") ||
+    location.pathname.startsWith("/seller/products") ||
+    location.pathname === "/admin/dashboard" ||
+    location.pathname === "/admin/dashboard/get-products" ||
+    location.pathname === "/admin/dashboard/get-sellers" ||
+    location.pathname === "/admin/login";
 
   return (
     <>

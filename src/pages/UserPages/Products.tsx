@@ -62,7 +62,7 @@ const ProductsPage = () => {
   }, [ProductsName, page]);
 
   return (
-    <div className="min-h-screen container mx-auto">
+    <div className=" container mx-auto">
       <h1 className="text-center mt-10 text-3xl font-semibold">
         Products Page
       </h1>

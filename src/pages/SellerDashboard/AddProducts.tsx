@@ -6,6 +6,7 @@ import { PrivateVariables } from "../../config/PrivateVariable";
 import { getToken } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utils/constant";
+import { useSelector } from "react-redux";
 
 const AddProducts = () => {
   //   const imgRef: any = useRef(null);
@@ -22,6 +23,7 @@ const AddProducts = () => {
   const [loading, setLoading] = useState(false);
   const token = getToken();
   const navigate = useNavigate();
+  const {user} = useSelector((state: any) => state?.app); 
 
   const handleInputChange = (e: any) => {
     const { name, value } = e?.target;
@@ -51,7 +53,6 @@ const AddProducts = () => {
       if (image) {
         formDataPayload.append("ProductPicture", image as any);
       }
-      console.log("api payload+++++++++", formDataPayload);
 
       const res = await axios.post(
         `${PrivateVariables.Api_Url}api/add/product`,
@@ -63,7 +64,7 @@ const AddProducts = () => {
           },
         },
       );
-      navigate(ROUTES.PRODUCTS);
+      navigate('/seller/products');
       setFormData({
         ProductName: "",
         ProductPrice: "",
@@ -87,7 +88,7 @@ const AddProducts = () => {
           name="ProductName"
           value={formData.ProductName}
           onChange={handleInputChange}
-          className="border border-gray-400 p-3"
+          className="border border-gray-400 p-3 text-black "
           placeholder="Enter Product Name"
         />
         <input
@@ -95,14 +96,14 @@ const AddProducts = () => {
           name="ProductPrice"
           value={formData.ProductPrice}
           onChange={handleInputChange}
-          className="border border-gray-400 p-3"
+          className="border border-gray-400 p-3 text-black"
           placeholder="Enter Product Price"
         />
         <textarea
           name="ProductDescription"
           value={formData.ProductDescription}
           onChange={handleInputChange}
-          className="border p-3 border-gray-400"
+          className="border p-3 border-gray-400 text-black"
           placeholder="Enter Product Description"
         />
         <label htmlFor="product"> Product Picture</label>
